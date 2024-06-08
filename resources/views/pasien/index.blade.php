@@ -26,7 +26,6 @@
       <div class="card">
         <div class="card-header">
           <h3 class="card-title">Data Pasien</h3>
-
           <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
               <i class="fas fa-minus"></i>
@@ -38,35 +37,50 @@
         </div>
         <div class="card-body">
           <div class="table-responsive">
-            <table class="table table-striped">
+          <a href="{{ route('pasien.create') }}" class="btn btn-primary">
+            <i class="fas fa-plus"></i>create</a>
+            <table class="table table-bordered">
               <thead>
                 <tr>
                   <th>No</th>
                   <th>Kode</th>
-                  <th>Nama Pasien</th>
+                  <th>Nama</th>
+                  <th>Tempat Lahir</th>
                   <th>Tanggal Lahir</th>
+                  <th>Gender</th>
                   <th>Email</th>
+                  <th>Alamat</th>
+                  <th>Kelurahan</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
                 @foreach($list_pasien as $pasien)
                 <tr>
-                  <td>{{$loop->iteration}}</td>
+                  <td>{{$pasien->id}}</td>
                   <td>{{$pasien->kode}}</td>
                   <td>{{$pasien->nama}}</td>
+                  <td>{{$pasien->tmp_lahir}}</td>
                   <td>{{$pasien->tgl_lahir}}</td>
+                  <td>{{$pasien->gender}}</td>
                   <td>{{$pasien->email}}</td>
+                  <td>{{$pasien->alamat}}</td>
+                  <td>{{$pasien->kelurahan->nama}}</td>
                   <td>
-                    <a href=""><button class="btn btn-success">detail</button></a>
-                    <a href=""><button class="btn btn-warning">Edit</button></a>
-                    <a href=""><button class="btn btn-danger">Hapus</button></a>
+                  <form action="{{ route('pasien.destroy', $pasien->id) }}" method="POST">
+                        <a href="{{ route('pasien.view', $pasien->id) }}" class="btn btn-primary">View</a>
+                        <a href="{{ route('pasien.edit', $pasien->id) }}" class="btn btn-warning">Edit</a>
 
-                  </td>
-                </tr>
+                        @csrf
+                        @method('DELETE')
+                         <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                     </td>
+                 </tr>
                 <!-- Add more rows if needed -->
-              </tbody>
+             
               @endforeach
+              </tbody>
             </table>
           </div>
         </div>
